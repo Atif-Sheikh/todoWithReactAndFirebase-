@@ -4,13 +4,14 @@ html{
 
 *{
   background: #00838F;
+  font-family: sans-serif;
 }
 
 .notesBody{
   height: 540px;
   overflow-y: scroll;
-  scroll-snap-points-y: auto;
 }
+
 .todoContent{
   align-items: center;
   margin: 0 auto;
@@ -22,6 +23,9 @@ html{
   float: right;
   font-size: 44px;
   cursor: pointer;
+}
+.deleteButton:hover {
+  color: white;
 }
 .notesHeader{
   width: 400px;
@@ -35,6 +39,12 @@ html{
   height: 50px;
   padding: 10px;
   border-radius: 5px;
+  transition: width 1s;
+  font-weight: bold;
+}
+.noteContent:hover {
+  border: 2px groove #26C6DA;
+  width: 620px;
 }
 
 .todoFooter {
@@ -60,6 +70,9 @@ html{
   padding: 5px;
   background: white;
 }
+.todoInput:hover {
+  border: 1px groove #26C6DA;
+}
 .todoButton{
   width: 80px;
   height: 40px;
@@ -71,6 +84,10 @@ html{
   border: none;
   background: darkcyan;
   color: black;
+}
+.todoButton:hover {
+  color: white;
+  cursor: pointer;
 }
 
 

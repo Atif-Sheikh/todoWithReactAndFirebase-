@@ -11,13 +11,13 @@ class Todo extends Component{
 
     handleDelete = (id) => {
         console.log('from child', id)
-        this.props.removeTodo(id);
+        return this.props.removeTodo(id);
     }
     render(props){
         return(
             <div className='todoContent'>   
                 <p className='noteContent'> { this.todoContent } 
-                <span className='deleteButton' onClick={() => this.handleDelete(this.noteId)}>
+                <span className='deleteButton' onClick={() => this.handleDelete(this.todoId)}>
                     &times;
                 </span>
                 </p>

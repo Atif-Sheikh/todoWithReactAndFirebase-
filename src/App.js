@@ -24,23 +24,37 @@ class App extends Component {
       this.setState({
         todos: previousTodos
       })
-    })
+    });
+
     this.database.on('child_removed', snap => {
-      for(var i=0; i < previousTodos.length; i++){
-        if(previousTodos[i].id === snap.key){
-          previousTodos.splice(i, 1);
-        }
-      }
+      this.previousTodos = previousTodos.filter((x) => x.id !== snap.key);
+      this.setState({
+        todos: this.previousTodos,
+      });
+      
+      // for(var i=0; i < previousTodos.length; i++){
+      //   if(previousTodos[i].id === snap.key){
+      //     previousTodos.splice(i, 1);
+      //   }
+      // }
+      // this.setState({
+      //     todos: this.previousTodos
+      //   });
     })
   }
   
-  removeTodo = (todoId) => {
-    console.log('from parent' ,todoId);
-    this.database.child(todoId).remove('todos');
+  removeTodo = (todo) => {
+    console.log('from parent' ,todo);
+    this.database.child(todo).remove();
   }
 
   addTodo = (todo) => {
-    this.database.push().set({todoContent: todo});
+    if(todo){
+      this.database.push().set({todoContent: todo});
+    }
+    else {
+      alert('Please enter Todo first');
+    }
     // const previousTodos = this.state.todos;
     // previousTodos.push({id: this.state.todos.length + 1, todoContent: todo});
     // this.setState({
@@ -57,7 +71,7 @@ class App extends Component {
           {
             this.state.todos.map((todo) => {
               return (
-                <Todo key={todo.Id} removeTodo={this.removeTodo} todoContent={todo.todoContent} todoId={todo.Id} />                    
+                <Todo key={todo.id} removeTodo={this.removeTodo} todoContent={todo.todoContent} todoId={todo.id} />                    
               )
             })
           }
