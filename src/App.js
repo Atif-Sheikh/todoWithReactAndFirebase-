@@ -11,56 +11,39 @@ class App extends Component {
     this.database = firebase.database().ref().child('todos');
     this.state= {
       todos: [],
-    }
-  }
-
-  componentWillMount(){
-    const previousTodos = this.state.todos;
-    this.database.on('child_added', snap => {
-      previousTodos.push({
-        id: snap.key,
-        todoContent: snap.val().todoContent, 
-      });
+      key: []
+    };
+  };
+  componentDidMount(){
+    this.database.on('value', snap => {
+      console.log('Atif', snap);
+      let todoKey = []
+      let arr = [];
+      let obj = snap.val();
+      for(let k in obj){
+        var value = obj[k]
+        var key = k;
+        arr.push(value);
+        todoKey.push(key);
+      };
       this.setState({
-        todos: previousTodos
+        todos: arr,
+        key: todoKey
       })
     });
-
-    this.database.on('child_removed', snap => {
-      this.previousTodos = previousTodos.filter((x) => x.id !== snap.key);
-      this.setState({
-        todos: this.previousTodos,
-      });
-      
-      // for(var i=0; i < previousTodos.length; i++){
-      //   if(previousTodos[i].id === snap.key){
-      //     previousTodos.splice(i, 1);
-      //   }
-      // }
-      // this.setState({
-      //     todos: this.previousTodos
-      //   });
-    })
-  }
-  
-  removeTodo = (todo) => {
-    console.log('from parent' ,todo);
-    this.database.child(todo).remove();
-  }
-
+};
+  removeTodo = (id) => {
+    console.log('from parent' ,id);
+    this.database.child(id).remove();
+  };
   addTodo = (todo) => {
     if(todo){
-      this.database.push().set({todoContent: todo});
+      this.database.push({todoContent: todo});
     }
     else {
       alert('Please enter Todo first');
     }
-    // const previousTodos = this.state.todos;
-    // previousTodos.push({id: this.state.todos.length + 1, todoContent: todo});
-    // this.setState({
-    //   todos: previousTodos
-    // });
-  }
+  };
   render(){
     return(
       <div className='notesWrapper'>
@@ -69,10 +52,11 @@ class App extends Component {
         </div>
         <div className='notesBody'>
           {
-            this.state.todos.map((todo) => {
+            this.state.todos.map((todo, idx) => {
+              console.log(todo);
               return (
-                <Todo key={todo.id} removeTodo={this.removeTodo} todoContent={todo.todoContent} todoId={todo.id} />                    
-              )
+                <Todo key={this.state.key[idx]} addTodo={this.addTodo} removeTodo={this.removeTodo} todoContent={todo.todoContent} todoId={this.state.key[idx]} />                    
+              );
             })
           }
         </div>

@@ -16,9 +16,40 @@ html{
   align-items: center;
   margin: 0 auto;
 }
-
+.editForm {
+  margin-left: 360px;
+}
+.updateButton{
+  width: 100px;
+  height: 50px;
+  border-radius: 5px;
+  font-size: 12px;
+}
+.cancelButton{
+  width: 100px;
+  height: 50px;
+  border-radius: 5px;
+  font-size: 12px;  
+}
+.cancelButton:hover{
+  background: black;
+  color: white;
+  cursor: pointer;  
+}
+.updateButton:hover{
+  background: black;
+  color: white;
+  cursor: pointer;
+}
 .deleteButton {
   color: red;
+  background: none;
+  float: right;
+  font-size: 44px;
+  cursor: pointer;
+}
+.editButton{
+  color: green;
   background: none;
   float: right;
   font-size: 44px;
