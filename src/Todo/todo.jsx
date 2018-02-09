@@ -21,11 +21,16 @@ class Todo extends Component{
     };
     updateTodo = (evt) => {
         evt.preventDefault();
-        firebase.database().ref().child(`todos/${this.todoId}`).update({todoContent: this.state.updateValue});
-        console.log(this.state.updateValue, this.todoId);
-        this.setState({
-            isEdit: !this.state.isEdit,
-        });
+        if(this.state.updateValue){
+            firebase.database().ref().child(`todos/${this.todoId}`).update({todoContent: this.state.updateValue});
+            console.log(this.state.updateValue, this.todoId);
+            this.setState({
+                isEdit: !this.state.isEdit,
+            });
+        }
+        else{
+            alert('Enter update Value');
+        };
     };
     editButton = (id) => {
         this.setState({
@@ -46,13 +51,13 @@ class Todo extends Component{
         console.log(this.props.todoContent)
         return(
             <div className='todoContent'>   
-                <p className='noteContent'> { this.props.todoContent }
-                <span className='editButton' onClick={() => this.editButton(this.todoId)}>
-                    &times;
-                </span> 
+                <p className='noteContent'><span style={{background: 'none'}}>{`${this.props.index + 1 }: `}</span> { this.props.todoContent }
                 <span className='deleteButton' onClick={() => this.handleDelete(this.todoId)}>
-                    &times;
+                    Delete
                 </span>
+                <span className='editButton' onClick={() => this.editButton(this.todoId)}>
+                   Edit                    
+                </span> 
                 </p>
             </div>
         );
@@ -61,7 +66,7 @@ class Todo extends Component{
         return(
             <form onSubmit={this.updateTodo} className='editForm'>
                 <input type='text' onChange={this.updateValue} className='noteContent' defaultValue={this.props.todoContent} />
-                <button type='submit' className='updateButton'>Update Todo</button>
+                <button type='submit' className='updateButton'>Update</button>
                 <button className='cancelButton' onClick={this.cancelButton}>Cancel</button>                      
             </form>
         );

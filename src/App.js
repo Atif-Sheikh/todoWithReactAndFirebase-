@@ -48,14 +48,14 @@ class App extends Component {
     return(
       <div className='notesWrapper'>
         <div className='notesHeader'>
-          <h1>Hello React and firebase!</h1>
+          <h1 className='heading'>Hello React and firebase!</h1>
         </div>
         <div className='notesBody'>
           {
             this.state.todos.map((todo, idx) => {
               console.log(todo);
               return (
-                <Todo key={this.state.key[idx]} addTodo={this.addTodo} removeTodo={this.removeTodo} todoContent={todo.todoContent} todoId={this.state.key[idx]} />                    
+                <Todo key={this.state.key[idx]} index={idx} addTodo={this.addTodo} removeTodo={this.removeTodo} todoContent={todo.todoContent} todoId={this.state.key[idx]} />                    
               );
             })
           }
